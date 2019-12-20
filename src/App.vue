@@ -1,13 +1,22 @@
 <template>
   <img src="./logo.png">
-  <h1>{{ msg }}</h1>
+  <h1>Hello Vue 3!</h1>
+  <button @click="inc">Clicked {{ count }} times.</button>
 </template>
 
 <script>
+import { ref } from 'vue'
+
 export default {
-  data() {
+  setup() {
+    const count = ref(0)
+    const inc = () => {
+      count.value++
+    }
+
     return {
-      msg: 'Hello Vue 3!'
+      count,
+      inc
     }
   }
 }
