@@ -5,7 +5,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = (env = {}) => ({
   mode: env.prod ? 'production' : 'development',
   devtool: env.prod ? 'source-map' : 'cheap-module-eval-source-map',
-  entry: path.resolve(__dirname, './src/main.js'),
+  entry: [
+    env.prod ? false : require.resolve(`webpack-dev-server/client`),
+    path.resolve(__dirname, './src/main.js')
+  ].filter(Boolean),
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/'
@@ -55,6 +58,8 @@ module.exports = (env = {}) => ({
     hot: true,
     stats: 'minimal',
     contentBase: __dirname,
-    overlay: true
+    overlay: true,
+    injectClient: false,
+    disableHostCheck: true
   }
 })
